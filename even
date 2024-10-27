@@ -1,0 +1,35 @@
+.model small
+.data
+a db 'The Number is Even $' 
+b db 'The Number is Odd $'
+
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    
+    mov ah,1
+    int 21h
+    
+    and al,0001h
+    cmp al,0h
+    je Even
+    jne Odd
+    
+    Even:
+    mov ah,9
+    lea dx,a
+    int 21h
+    jmp Exit
+    
+    Odd:
+    mov ah,9
+    lea dx,b
+    int 21h
+    jmp Exit
+    
+    Exit:
+    mov ah,4ch
+    int 21h
+    main endp
+end main
